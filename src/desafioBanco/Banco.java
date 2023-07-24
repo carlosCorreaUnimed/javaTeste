@@ -7,9 +7,22 @@ public class Banco {
 	public static void main(String[] args) {
 		Scanner leitura = new Scanner(System.in);
 		
-		double sInicial1= 850.00;
+		
+		
+		Clientes pessoa1 = new Clientes("Ruan", 15, 800.00, false);
+		Clientes pessoa2 = new Clientes("Júlio", 23, 1250.00, false);
+		
+		//double pessoa1.getSaldo()= 850.00;
+		System.out.println("Escolha com qual usuário você quer entrar: ");
+		int escolher = leitura.nextInt();
 		int i = 0;
-		System.out.println("Seu saldo inicial é de R$%.2f".formatted(sInicial1));
+		if (escolher == 1) {
+			System.out.println("Seu saldo inicial é de R$%.2f".formatted(pessoa1.getSaldo()));
+		}else if (escolher == 2) {
+			System.out.println("Seu saldo inicial é de R$%.2f".formatted(pessoa2.getSaldo()));
+		}else {
+			System.out.println("Essa conta não existe");
+		}
 		while (i == 0) {
 		System.out.print("""
 
@@ -24,31 +37,32 @@ public class Banco {
 		int digita = leitura.nextInt();
 		switch (digita) {
 		   case 1:
-		      System.out.println("\nSeu saldo é de: " + sInicial1);
+		      System.out.println("\nSeu saldo é de: " + pessoa1.getSaldo());
 		      break;
+		      
 		   case 2:
+			   
 		      System.out.println("\nQuanto você irá receber? ");
 		      double receber = leitura.nextDouble();
-		      if(receber < 0) {
-		    	  System.out.println("\nValor Inválido, tente novamente");
-		    	  break;
-		      }
-		      sInicial1 += receber;
-		      System.out.println("\nSaldo atualizado %.2f:".formatted(sInicial1));
+		      try {
+		    	  pessoa1.recebimento(receber);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		      break;
+		      
 		   case 3:
+			   
 		      System.out.println("\nQuanto você irá transferir? ");
 		      double transferir = leitura.nextDouble();
-		      if(transferir > sInicial1) {
-		    	  System.out.println("\nFalta de saldo para transferência!");
-		    	  break;
-		      }else if(transferir < 0) {
-		    	  System.out.println("\nValor inválido, tente novamente");
-		    	  break;
-		      }
-		      sInicial1 -= transferir;
-		      System.out.println("\nSaldo atualizado %.2f:".formatted(sInicial1));
+		      try {
+		    	  pessoa1.transferir(escolher, transferir, pessoa2);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		      
 		      break;
+		      
 		   case 4:
 			      System.out.println("\nVocê saiu do aplicativo");
 			      i++;
